@@ -1,0 +1,27 @@
+.judul_login {
+    padding-top: 5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.login {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    margin-right: 30rem;
+    margin-left: 30rem;
+    gap: 2rem;
+    
+    #login_button {
+        margin-right: 3rem;
+    }
+    
+    #google {
+        margin-left: 5rem;
+    }
+    
+    #belum_punya_akun {
+        margin-left: 5.1rem;
+    }
+}
+

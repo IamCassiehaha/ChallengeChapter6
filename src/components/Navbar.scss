@@ -1,0 +1,86 @@
+.navbar_container {
+    a {
+        text-decoration: none;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(black, black, transparent);
+    // background-color: black;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    form {
+        background-color: transparent;
+        border-radius: 9999px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: .5rem 1rem;
+        border: 1px solid rgb(255, 0, 0, .8);
+        box-shadow: inset 0 0 5px red, 0 0 5px red;
+        width: 300px;
+        svg {
+            color: white;
+        }
+        input {
+            background: transparent;
+            outline: none;
+            border: none;
+            font-size: 1rem;
+            width: 100%;
+            text-align: center;
+            color: white;
+            &::placeholder {
+                color: rgba(255,255,255,0.7);
+            }
+        }
+        button {
+            background: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+            aspect-ratio: 1;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            svg {
+                color: white;
+            }
+        }
+        .search-dropdown {
+            width: 100%;
+            height: 200px;
+            position: absolute;
+            background: red;
+            top: calc(100% + 10px);
+            overflow-y: scroll;
+        }
+    }
+}
+
+
+#judul_web {
+    color: red;
+    padding: 1rem 1.5rem;
+}
+
+.button_navbar_all {
+    padding-right: 2rem;
+}
+
+#button_login {
+    margin-right: 1rem;
+    border-radius: 1rem;
+    // pakai "!important" biar button dr MUI mau berubah warna
+    color: red !important;
+    border-color: red !important;
+}
+
+#button_register {
+    border-radius: 1rem;
+    background-color: red;
+}
