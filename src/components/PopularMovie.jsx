@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./popularmovie.scss";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
-import axios from "axios";
+import {useDispatch, useSelector} from 'react-redux';
+import { getMovieList } from '../feature/movie/movieSlice';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../../node_modules/swiper/swiper.min.css";
 import "../../node_modules/swiper/modules/pagination/pagination.min.css";
@@ -9,20 +10,14 @@ import { Navigation } from "swiper";
 import { useNavigate } from "react-router-dom";
 
 const PopularMovie = () => {
-  const navigate = useNavigate();
+  const movies = useSelector(state=> state.movies.movies)
+  const dispatch = useDispatch();
 
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_LINK_URL}/movie/popular`, {
-        params: {
-          api_key: process.env.REACT_APP_TMDB_API_KEY,
-        },
-      })
-      .then((response) => {
-        setMovies(response.data.results);
-      });
-  }, []);
+  useEffect(()=>{
+    dispatch(getMovieList());
+  }, [dispatch])
+
+  const navigate = useNavigate();
 
   return (
     <div className="popular">
@@ -45,11 +40,11 @@ const PopularMovie = () => {
             modules={[Navigation]}
             className="mySwiper"
           >
-            {movies.map((result, index) => {
+            {movies.length > 0 && movies.map((result, index) => {
               return (
                 <div className="popular_card" key={index}>
                   <SwiperSlide key={index}>
-                    <a href={`/Details/${result.id}`} key={index}>
+                    <a href={`/Details/${result.id}`} key={result.id}>
                       <img
                         src={`${process.env.REACT_APP_GAMBAR_LINK_URL}/${result.poster_path}`}
                         alt={`${result.original_title}`}

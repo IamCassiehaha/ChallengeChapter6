@@ -5,6 +5,7 @@ button {
     border-color: black;
     background-color: #9F9D9D;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #AllMovie {
@@ -28,18 +29,22 @@ form {
     position: relative;
 }
 
+.form-search{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
 #search_icon {
     color: black;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50px;
-    padding-top: 0.8rem;
-    
+    height: 3rem;
+    margin-top: 0;
+    margin-left: 0;
 }
 
 .movie-searchbar {
-    height: 32px;
+    height: 3rem;
     font-size: 14px;
     padding: 8px;
     font-weight: bold;

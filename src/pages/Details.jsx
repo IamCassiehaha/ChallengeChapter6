@@ -1,28 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Details.scss";
+import {useDispatch, useSelector} from 'react-redux';
+import { getDetailMovie } from '../feature/movie/movieSlice';
 
 export default function Details() {
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
+  const movie = useSelector(state=> state.movies.detail)
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const apiKey = process.env.REACT_APP_TMDB_API_KEY;
-    axios
-      .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`)
-      .then((response) => {
-        console.log(response.data);
-        setMovie(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-// }, []);
+  useEffect(()=>{
+    dispatch(getDetailMovie(id));
+  }, [id, dispatch])
 
   return (
-    <main>
+    <main key={movie.id}>
       <div className="movie-details-cover">
         <img
           className="movie-backdrop"

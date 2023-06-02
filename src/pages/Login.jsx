@@ -3,6 +3,8 @@ import GoogleButton from 'react-google-button';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserAuth } from '../handleUser/UserAuth';
+import {useDispatch} from 'react-redux';
+import { loginAccount } from '../feature/movie/movieSlice';
 import "./Login.scss";
 
 const Login = () => {
@@ -15,14 +17,29 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const {logIn, googleSignIn}= UserAuth()
+  const dispatch = useDispatch();
+
+
+  const dataLogin = {
+    "email": email,
+    "password": password
+  }
+
+  const {googleSignIn}= UserAuth()
 
   const handleSubmit = async(e) => {
     e.preventDefault()
     setError("")
     try{
-      await logIn(email, password)
-      navigate("/Home");
+      await dispatch(loginAccount(dataLogin))
+      const isLogin = localStorage.getItem('isLogin');
+      const token = localStorage.getItem('token');
+      if(isLogin && token){
+        navigate("/Home");
+      }else{
+        alert("check your email and password again!")
+      }
+      // await logIn(email, password)
     }catch(err){
       setError(err.message)
     }

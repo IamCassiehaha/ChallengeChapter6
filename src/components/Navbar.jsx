@@ -3,7 +3,6 @@ import { Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.scss";
-import { UserAuth } from "../handleUser/UserAuth";
 
 const Navbar = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -11,14 +10,14 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   function handleSearch() {
-    navigate(`/SearchResult?search=${searchKeyword}`);
+    navigate(`/SearchResult/${searchKeyword}`);
   }
 
-  const{logOut} = UserAuth()
   
   const handleLogout = async () => {
     try {
-      await logOut();
+      localStorage.removeItem('isLogin')
+      localStorage.removeItem('token')
       navigate("/");
     } catch (error) {
       console.log(error.message);

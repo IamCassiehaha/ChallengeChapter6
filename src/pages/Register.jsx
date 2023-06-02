@@ -1,28 +1,50 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { UserAuth } from '../handleUser/UserAuth';
+import {useDispatch} from 'react-redux';
+import { registerAccount } from '../feature/movie/movieSlice';
 import "./Register.scss";
 
 
 const Register = () => {
+
+  const [name, setName] = useState("")
 
   const [email, setEmail] = useState("")
   
   const [password, setPassword] = useState("")
   
   const [error, setError] = useState("")
+
+  const dataRegister = {
+    "name": name,
+    "email": email,
+    "password": password
+  }
+
+  const dispatch = useDispatch();
   
   const navigate = useNavigate()
   
-  const {signUp}= UserAuth()
-
   const handleSubmit = async(e) => {
     e.preventDefault()
     setError("")
     try{
-      await signUp(email, password)
-      navigate("/")
+      await dispatch(registerAccount(dataRegister))
+      const isLogin = localStorage.getItem('isLogin');
+      const token = localStorage.getItem('token');
+      if(isLogin && token){
+        navigate("/Home")
+      }else{
+        navigate("/Register")
+      }
+      const error = localStorage.getItem('error');
+      if(error){
+        alert(error)
+        localStorage.removeItem('error')
+      }
+      // await signUp(email, password)
+      // navigate("/")
     }catch(err){
       setError(err.message)
     }
@@ -36,6 +58,7 @@ const Register = () => {
         onSubmit={handleSubmit}
         className='register'
       >
+        <input type='text' placeholder='Name' onChange={(e) => setName(e.target.value)} />
         <input type='text' placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
         <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
         <button id='register_button'>Register</button>

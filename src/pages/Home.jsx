@@ -5,13 +5,13 @@ import PopularMovie from '../components/PopularMovie';
 import Footer from '../components/Footer';
 
 const Home = () => {
-  return (
+  return ( 
     <div>
       <Navbar />
       <Header />
       <PopularMovie />
       <Footer />
-    </div>
+    </div>  
   )
 }
 

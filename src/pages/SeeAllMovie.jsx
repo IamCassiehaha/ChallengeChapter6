@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import './SeeAllMovie.scss';
-import { getMovieList, searchMovie } from './api';
+// import { getMovieList, searchMovie } from './api';
 import { useNavigate } from "react-router-dom"; // berguna untuk routing
 import SearchIcon from '@mui/icons-material/Search';
+import {useDispatch, useSelector} from 'react-redux';
+import { getMovieList} from '../feature/movie/movieSlice';
 
 const SeeAllMovie = () => {
 
   // berguna untuk routing
   const navigate = useNavigate()
+  const [search, setSearch] = useState("")
 
-  const [popularMovies, setPopularMovies] = useState([])
+  const movies = useSelector(state=> state.movies.movies)
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    getMovieList().then((result) => {
-      setPopularMovies(result)
-    })
-  }, [])
+  useEffect(()=>{
+    dispatch(getMovieList());
+  }, [dispatch])
+
 
   const PopularMovieList = () => {
-    return popularMovies.map((movie, i) => {
+    return movies.map((movie, i) => {
       return (
         <div className='movie-wrapper' key={i}>
           <div className='movie-title'>{movie.title}</div>
@@ -31,11 +34,8 @@ const SeeAllMovie = () => {
     })
   } 
 
-  const search = async(q) => {
-    if (q.length > 3) {
-      const query = await searchMovie(q)
-      setPopularMovies(query.results)
-    }
+  const submit = () => {
+    navigate(`/SearchResult/${search}`)
   }
 
   return (
@@ -44,13 +44,13 @@ const SeeAllMovie = () => {
       <button onClick={() => navigate ('/')}>Back</button>
       <div className='all-movie'>
         <h1 id='AllMovie'>All Movie</h1>
-        <form>
+        <form className='form-search'>
           <input 
             placeholder='What do you want to watch?' 
             className='movie-searchbar' 
-            onChange={({ target }) => search(target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
-           <SearchIcon id='search_icon'></SearchIcon>
+          <button id='search_icon' onClick={submit}><SearchIcon /></button>
         </form>
         <div className='movie-container'>
           <PopularMovieList />
