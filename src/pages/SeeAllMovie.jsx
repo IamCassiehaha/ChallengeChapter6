@@ -41,7 +41,7 @@ const SeeAllMovie = () => {
   return (
     <div>
       {/* kalau di klik dia bakalan kembali ke Home */}
-      <button onClick={() => navigate ('/')}>Back</button>
+      <button onClick={() => navigate ('/Home')}>Back</button>
       <div className='all-movie'>
         <h1 id='AllMovie'>All Movie</h1>
         <form className='form-search'>
